@@ -1,0 +1,10 @@
+../Core/Src/bootloader_functions.c:53:6:printmsg	96	static
+../Core/Src/bootloader_functions.c:65:6:bootloader_default_mode	8	static
+../Core/Src/bootloader_functions.c:80:6:bootloader_jump_to_app1	24	static,ignoring_inline_asm
+../Core/Src/bootloader_functions.c:111:6:bootloader_jump_to_app2	24	static,ignoring_inline_asm
+../Core/Src/bootloader_functions.c:144:9:execute_flash_erase	48	static
+../Core/Src/bootloader_functions.c:193:6:bootloader_erase_flash_sector	24	static
+../Core/Src/bootloader_functions.c:230:10:bootloader_get_mcu_chip_id	16	static
+../Core/Src/bootloader_functions.c:242:10:bootloader_handle_read_sector_protection_status	40	static
+../Core/Src/bootloader_functions.c:258:6:upload_New_App	32	static
+../Core/Src/bootloader_functions.c:287:6:HAL_UART_RxCpltCallback	24	static
