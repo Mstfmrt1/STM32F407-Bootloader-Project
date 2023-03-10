@@ -6,7 +6,7 @@
 #include "bootloader_functions.h"
 
 
-/**************************DEFINES*************************************/
+/**************************DEFINES*************************************/:)
 
 #define FLASH_APP_1_START		((uint32_t)0x08008000)
 #define FLASH_APP_2_START 		((uint32_t)0x0800C000)
