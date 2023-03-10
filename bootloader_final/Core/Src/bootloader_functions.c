@@ -62,7 +62,7 @@ void printmsg(char *format,...)
 
 /*************************Bootloader Default Mode *************************/
 
-void bootloader_default_mode(void)																//default mode blinky
+void bootloader_default_mode(void)							//default mode blinky
 {
 	if( myBootloader.mainMenuState == Idle
 		&& myBootloader.mainMenuActive == yes){
@@ -86,13 +86,13 @@ void bootloader_jump_to_app1(void)
 	{
 		printmsg("BL BOOTLOADER MSG: Hello from the Jump APP1 \r\n");
 
-		typedef void (*pFunction)(void);										//1. holding to reset handler address
+		typedef void (*pFunction)(void);								//1. holding to reset handler address
 		pFunction jump_to_app1;
 
 		/* Jump to user application */
-		uint32_t reset_handler_addr=*(__IO uint32_t*) (FLASH_APP_1_START + 4);	//2. Reset Handler = msp+4
+		uint32_t reset_handler_addr=*(__IO uint32_t*) (FLASH_APP_1_START + 4);				//2. Reset Handler = msp+4
 
-		jump_to_app1=(pFunction)reset_handler_addr;								//3. new operation with reset handler
+		jump_to_app1=(pFunction)reset_handler_addr;							//3. new operation with reset handler
 
 		/* Initialize user application's stack pointer */
 		__set_MSP(*(__IO uint32_t*) FLASH_APP_1_START);							//4. flash jump adress = msp value
@@ -122,12 +122,12 @@ void bootloader_jump_to_app2(void)
 		pFunction jump_to_app2;
 
 		/* Jump to user application */
-		uint32_t reset_handler_addr=*(__IO uint32_t*) (FLASH_APP_2_START + 4);	//2. Reset Handler = msp+4
+		uint32_t reset_handler_addr=*(__IO uint32_t*) (FLASH_APP_2_START + 4);				//2. Reset Handler = msp+4
 
-		jump_to_app2=(pFunction)reset_handler_addr;						//3. new operation with reset handler
+		jump_to_app2=(pFunction)reset_handler_addr;							//3. new operation with reset handler
 
 		/* Initialize user application's stack pointer */
-		__set_MSP(*(__IO uint32_t*) FLASH_APP_2_START);					//4. flash jump adress = msp value
+		__set_MSP(*(__IO uint32_t*) FLASH_APP_2_START);							//4. flash jump adress = msp value
 
 		/* Jump to user application */
 		jump_to_app2();
@@ -146,9 +146,9 @@ uint8_t execute_flash_erase(uint8_t sector_number,uint8_t number_of_sector)
 
 
 		FLASH_EraseInitTypeDef flashErase_handle;
-		uint32_t sectorError;													  //STM32F407 has 11 sectors [0 to 11]
-																				  //number_of_sector has to be in the range of 0 to 11
-																			      // if sector_number = 0xff , that means mass erase
+		uint32_t sectorError;								        //STM32F407 has 11 sectors [0 to 11]
+													//number_of_sector has to be in the range of 0 to 11
+													// if sector_number = 0xff , that means mass erase
 		HAL_StatusTypeDef status;
 
 		if(number_of_sector>11)
@@ -162,7 +162,7 @@ uint8_t execute_flash_erase(uint8_t sector_number,uint8_t number_of_sector)
 		else
 		 {
 
-			uint8_t remaining_sector = 11 - sector_number;						/*calculating how many sectors needs to erased */
+			uint8_t remaining_sector = 11 - sector_number;					/*calculating how many sectors needs to erased */
 
             if(number_of_sector>remaining_sector)
               {
@@ -173,10 +173,10 @@ uint8_t execute_flash_erase(uint8_t sector_number,uint8_t number_of_sector)
             flashErase_handle.Sector = sector_number; 							// this is the initial sector
             flashErase_handle.NbSectors = number_of_sector;						//this is the number of sector that what you want how many sector to erase
 	    }
-		flashErase_handle.Banks=FLASH_BANK_1;									//*Get access to touch the flash registers
+		flashErase_handle.Banks=FLASH_BANK_1;							//*Get access to touch the flash registers
 
 		HAL_FLASH_Unlock();
-		flashErase_handle.VoltageRange = FLASH_VOLTAGE_RANGE_3; 				//  mcu will work on this voltage range
+		flashErase_handle.VoltageRange = FLASH_VOLTAGE_RANGE_3; 				//  MCU will work on this voltage range
 		status = (uint8_t) HAL_FLASHEx_Erase(&flashErase_handle, &sectorError);
 		HAL_FLASH_Lock();
 
@@ -196,7 +196,7 @@ void bootloader_erase_flash_sector(uint8_t sector_number1,uint8_t number_of_sect
 	 uint8_t erase_status=0x00;
 	 printmsg("BL_DEBUG_MSG: bootloader_erase_flash_sector !!\n");
 	 erase_status=execute_flash_erase(sector_number1,number_of_sector1);
-	 printmsg("BL_DEBUG_MSG: flash erase status: %#x\n",erase_status); //HARDFAULTA DÜŞÜYOR
+	 printmsg("BL_DEBUG_MSG: flash erase status: %#x\n",erase_status);				 //HARDFAULTA DÜŞÜYOR
 	 	 if(erase_status == HAL_OK)
 	     {
 	         printmsg("\n  Erase Status: Success  Code: Flash_HAL_OK\n");
@@ -243,11 +243,11 @@ uint16_t bootloader_handle_read_sector_protection_status(void)
 {
 
 		FLASH_OBProgramInitTypeDef OBInit;						//This structure is given by ST Flash driver to hold the OB(Option Byte) contents .
-		HAL_FLASH_OB_Unlock();									//First unlock the OB(Option Byte) memory access
+		HAL_FLASH_OB_Unlock();								//First unlock the OB(Option Byte) memory access
 
 		HAL_FLASHEx_OBGetConfig(&OBInit);						//get the OB configuration details
 
-		HAL_FLASH_Lock();										//Lock back .
+		HAL_FLASH_Lock();								//Lock back .
 
 
 		return (uint16_t)OBInit.WRPSector;						// r/w protection status of the sectors.
