@@ -2,4 +2,4 @@
 STM32F407 BOOTLOADER PROJECT
 
 
-Upload APP functions will be uploaded , other states correcytly work.
+Upload New APP functions will be uploaded , other states correcytly work.
